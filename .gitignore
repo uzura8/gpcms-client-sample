@@ -1,3 +1,9 @@
+# OS file
+*~
+*.bak
+.DS_Store
+Thumbs.db
+
 # Logs
 logs
 *.log
@@ -9,11 +15,13 @@ lerna-debug.log*
 
 package-lock.json
 node_modules
-.DS_Store
+/public
 dist
 dist-ssr
 coverage
 *.local
+.env
+.yarn
 
 /cypress/videos/
 /cypress/screenshots/
@@ -27,3 +35,10 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+.buildpath
+.project
+.settings
+*.tmproj
+desktop.ini
+nbproject/
+tags
