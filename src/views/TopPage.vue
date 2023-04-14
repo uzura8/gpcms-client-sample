@@ -1,6 +1,6 @@
 <template>
   <div>
-    Top
+    <h1 class="">{{ $t('page.top') }}</h1>
   </div>
 </template>
 
