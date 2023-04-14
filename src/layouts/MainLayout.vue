@@ -43,7 +43,6 @@
               exact
               :aria-current="current === '/about' ? 'page' : null"
               class="font-medium text-gray-600"
-              aria-current="page"
             >About</RouterLink>
           </div>
         </div>
