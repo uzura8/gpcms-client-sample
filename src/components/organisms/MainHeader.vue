@@ -1,10 +1,10 @@
 <template>
-  <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 dark:bg-gray-800 z-40">
-    <nav class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between" aria-label="Global">
+  <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-5 px-7 dark:bg-gray-800 z-40">
+    <nav class="max-w-[85rem] w-full mx-auto sm:flex sm:items-center sm:justify-between" aria-label="Global">
       <div class="flex items-center justify-between">
         <RouterLink
           to="/"
-          class="flex-none text-xl font-semibold dark:text-white"
+          class="flex-none text-3xl font-semibold dark:text-white"
         >{{ siteName }}</RouterLink>
         <div class="sm:hidden">
           <button
@@ -35,19 +35,19 @@
             to="/"
             exact
             :aria-current="current === '/' ? 'page' : null"
-            class="font-medium text-gray-600"
+            class="font-medium text-gray-600 text-lg"
           >{{ $t('page.top') }}</RouterLink>
           <RouterLink
             to="/about"
             exact
             :aria-current="current === '/about' ? 'page' : null"
-            class="font-medium text-gray-600"
+            class="font-medium text-gray-600 text-lg"
           >{{ $t('page.about') }}</RouterLink>
           <RouterLink
             to="/posts"
             exact
             :aria-current="current === '/posts' ? 'page' : null"
-            class="font-medium text-gray-600"
+            class="font-medium text-gray-600 text-lg"
           >{{ $t('term.postList') }}</RouterLink>
         </div>
       </div>

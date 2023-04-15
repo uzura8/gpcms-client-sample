@@ -6,12 +6,12 @@
       <MainHeader />
 
       <div class="flex-1">
-        <div class="md:grid md:grid-cols-12 h-full max-w-[85rem] mx-auto">
-          <main class="md:col-span-9 lg:col-span-10 p-4">
+        <div class="lg:grid lg:grid-cols-12 h-full max-w-[85rem] mx-auto">
+          <main class="lg:col-span-9 lg:col-span-10 px-6 py-8">
             <RouterView />
           </main>
 
-          <aside class="md:col-span-3 lg:col-span-2 p-4">
+          <aside class="md:col-span-3 lg:col-span-2 p-6">
             Side
           </aside>
         </div>
