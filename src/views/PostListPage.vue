@@ -9,6 +9,7 @@
       >
         <div
           v-for="post in posts"
+          :key="post.postId"
           class="bg-white overflow-hidden rounded-lg shadow-md"
         >
           <div
@@ -41,20 +42,28 @@ import type { PostPublic, PagerKey } from '@/types/Post.d'
 import { defineComponent, reactive, ref, computed, onBeforeMount } from 'vue'
 import { config } from '@/configs'
 import { PostApi } from '@/apis'
+import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
-  name: 'PostListPage',
-
   components: {
   },
 
   setup() {
+    // data
     let posts = ref([] as PostPublic[])
     let pagerKey = reactive({} as PagerKey)
 
+    // store
+    const globalLoader = useGlobalLoaderStore()
+    const { isLoading: isGlobalLoading } = storeToRefs(globalLoader)
+
+    // computed
     const hasNext = computed(() => Boolean(pagerKey))
 
+    // methods
     const getPostList = async () => {
+      globalLoader.updateState(true)
       try {
         const serviceId = config.post.serviceId
         const res = await PostApi.getList(serviceId)
@@ -62,8 +71,10 @@ export default defineComponent({
           posts.value.push(item)
         })
         pagerKey = res.pagerKey
+        globalLoader.updateState(false)
       } catch (error) {
         console.log(error)
+        globalLoader.updateState(false)
       }
     }
 
@@ -76,6 +87,7 @@ export default defineComponent({
       pagerKey,
       getPostList,
       hasNext,
+      isGlobalLoading,
     }
   },
 })
