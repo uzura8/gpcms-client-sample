@@ -9,13 +9,18 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        name: 'top',
+        name: 'TopPage',
         component: () => import('@/views/TopPage.vue')
       },
       {
         path: '/about',
-        name: 'about',
+        name: 'AboutPage',
         component: () => import('@/views/AboutPage.vue')
+      },
+      {
+        path: '/posts',
+        name: 'PostListPage',
+        component: () => import('@/views/PostListPage.vue')
       },
     ],
   },

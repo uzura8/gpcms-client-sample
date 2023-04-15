@@ -37,13 +37,19 @@
               exact
               :aria-current="current === '/' ? 'page' : null"
               class="font-medium text-gray-600"
-            >Top</RouterLink>
+            >{{ $t('page.top') }}</RouterLink>
             <RouterLink
               to="/about"
               exact
               :aria-current="current === '/about' ? 'page' : null"
               class="font-medium text-gray-600"
-            >About</RouterLink>
+            >{{ $t('page.about') }}</RouterLink>
+            <RouterLink
+              to="/posts"
+              exact
+              :aria-current="current === '/posts' ? 'page' : null"
+              class="font-medium text-gray-600"
+            >{{ $t('term.postList') }}</RouterLink>
           </div>
         </div>
       </nav>

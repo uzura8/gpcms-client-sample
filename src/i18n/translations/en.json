@@ -242,6 +242,7 @@
     "markdown": "Markdown",
     "text": "Normal Text",
     "rawHtml": "raw HTML",
+    "postList": "Posts",
     "postGroup": "Post Group",
     "hiddenInListLabel": "Not in list",
     "availableFunctions": {
