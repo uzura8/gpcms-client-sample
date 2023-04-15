@@ -2,7 +2,7 @@
   <div>
     <h1 class="text-4xl font-extrabold dark:text-white">{{ $t('term.postList') }}</h1>
 
-    <div class="container mx-auto py-8 px-4">
+    <div class="container mx-auto py-8">
       <div
         v-if="posts.length"
         class="grid grid-cols-1 gap-6"
@@ -10,15 +10,20 @@
         <div
           v-for="post in posts"
           :key="post.postId"
-          class="bg-white overflow-hidden rounded-lg shadow-md"
+          class="bg-white overflow-hidden rounded-lg shadow-md grid grid-cols-1 md:grid-cols-3"
         >
           <div
             v-if="post.images.length > 0"
-            class="relative"
+            class="relative col-span-2 md:col-span-1"
           >
-            <img src="https://picsum.photos/600/400" alt="記事画像" class="w-full h-64 object-cover">
+            <MediaImg
+              :service-id="serviceId"
+              :file-id="post.images[0].fileId"
+              :mime-type="post.images[0].mimeType"
+              size="1200x800xc"
+            />
           </div>
-          <div class="p-6">
+          <div class="p-6 col-span-1 sm:col-span-2">
             <h3 class="text-xl font-medium text-gray-900 mb-4">
               {{ post.title }}
             </h3>
@@ -42,11 +47,13 @@ import type { PostPublic, PagerKey } from '@/types/Post.d'
 import { defineComponent, reactive, ref, computed, onBeforeMount } from 'vue'
 import { config } from '@/configs'
 import { PostApi } from '@/apis'
-import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { storeToRefs } from 'pinia'
+import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
+import MediaImg from '@/components/atoms/MediaImg.vue'
 
 export default defineComponent({
   components: {
+    MediaImg,
   },
 
   setup() {
@@ -59,6 +66,7 @@ export default defineComponent({
     const { isLoading: isGlobalLoading } = storeToRefs(globalLoader)
 
     // computed
+    const serviceId = computed(() => config.post.serviceId)
     const hasNext = computed(() => Boolean(pagerKey))
 
     // methods
@@ -83,6 +91,7 @@ export default defineComponent({
     })
 
     return {
+      serviceId,
       posts,
       pagerKey,
       getPostList,
