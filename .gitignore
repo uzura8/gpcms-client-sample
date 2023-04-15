@@ -42,3 +42,5 @@ coverage
 desktop.ini
 nbproject/
 tags
+
+/src/configs/config.json

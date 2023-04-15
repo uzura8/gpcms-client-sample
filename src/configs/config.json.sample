@@ -1,0 +1,9 @@
+{
+  "api": {
+    "origin": "https://example.com",
+    "basePath": "/api"
+  },
+  "post": {
+    "serviceId": "your-serviceId"
+  }
+}
