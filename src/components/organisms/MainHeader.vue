@@ -5,7 +5,7 @@
         <RouterLink
           to="/"
           class="flex-none text-xl font-semibold dark:text-white"
-        >GPCMS</RouterLink>
+        >{{ siteName }}</RouterLink>
         <div class="sm:hidden">
           <button
             @click="isOpen = !isOpen"
@@ -58,6 +58,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import config from '@/configs/config.json'
 
 export default defineComponent({
   components: {
@@ -66,12 +67,12 @@ export default defineComponent({
   setup() {
     //data
     let isOpen = ref(false)
-
     // computed
     const route = useRoute()
     const current = computed((): string => route.path)
+    const siteName = computed((): string => config.site.name)
 
-    return { isOpen, current }
+    return { isOpen, current, siteName }
   },
 })
 </script>

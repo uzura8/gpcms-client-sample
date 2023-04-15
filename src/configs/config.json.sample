@@ -1,4 +1,8 @@
 {
+  "site": {
+    "name": "Your SiteName",
+    "footerRight": "©Your Organization. 2023. All rights reserved."
+  },
   "api": {
     "origin": "https://example.com",
     "basePath": "/api"
