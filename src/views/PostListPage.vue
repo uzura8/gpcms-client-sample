@@ -33,6 +33,15 @@
             <a href="#" class="text-indigo-500 font-medium inline-block">{{ $t('common.more') }}</a>
           </div>
         </div>
+        <div
+          v-if="hasNext"
+          class="text-center"
+        >
+          <a
+            @click="setPostList"
+            class="cursor-pointer text-blue-600 hover:text-blue-800"
+          >{{ $t('common.more') }}</a>
+        </div>
       </div>
 
       <div v-else>
@@ -50,6 +59,10 @@ import { PostApi } from '@/apis'
 import { storeToRefs } from 'pinia'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import MediaImg from '@/components/atoms/MediaImg.vue'
+
+interface Params {
+  pagerKey?: string
+}
 
 export default defineComponent({
   components: {
@@ -70,11 +83,15 @@ export default defineComponent({
     const hasNext = computed(() => Boolean(pagerKey))
 
     // methods
-    const getPostList = async () => {
+    const setPostList = async () => {
       globalLoader.updateState(true)
       try {
         const serviceId = config.post.serviceId
-        const res = await PostApi.getList(serviceId)
+        let params: Params = {}
+        if (Object.keys(pagerKey).length > 0) {
+          params.pagerKey = JSON.stringify(pagerKey)
+        }
+        const res = await PostApi.getList(serviceId, params)
         res.items.map((item: PostPublic) => {
           posts.value.push(item)
         })
@@ -87,14 +104,14 @@ export default defineComponent({
     }
 
     onBeforeMount(async () => {
-      await getPostList()
+      await setPostList()
     })
 
     return {
       serviceId,
       posts,
       pagerKey,
-      getPostList,
+      setPostList,
       hasNext,
       isGlobalLoading,
     }

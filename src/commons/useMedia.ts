@@ -13,7 +13,6 @@ export default function useMedia() {
       const fileName = `${fileId}.${ext}`
       pathItems.push('docs', fileName)
     }
-    console.log('mediaUrl', pathItems.join('/'))
     return pathItems.join('/')
   }
 
