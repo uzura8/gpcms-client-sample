@@ -16,6 +16,7 @@
 
 <script lang="ts">
 //import type { MimeTypeImage } from '@/types/Media.d'
+import type { PropType } from 'vue'
 import { defineComponent, computed } from 'vue'
 import useMedia from '@/commons/useMedia'
 
@@ -34,43 +35,43 @@ import useMedia from '@/commons/useMedia'
 export default defineComponent({
   props: {
     serviceId: {
-      type: String,
+      type: String as PropType<string>,
       default: '',
     },
     fileId: {
-      type: String,
+      type: String as PropType<string>,
       default: '',
     },
     mimeType: {
-      type: String,
+      type: String as PropType<string>,
       default: '',
     },
     size: {
-      type: String,
+      type: String as PropType<string>,
       default: 'raw',
     },
     src: {
-      type: String,
+      type: String as PropType<string>,
       default: '',
     },
     sizeClass: {
-      type: String,
+      type: String as PropType<string>,
       default: '',
     },
     caption: {
-      type: String,
+      type: String as PropType<string>,
       default: '',
     },
     isClickable: {
-      type: Boolean,
+      type: Boolean as PropType<boolean>,
       default: false,
     },
     isRounded: {
-      type: Boolean,
+      type: Boolean as PropType<boolean>,
       default: false,
     },
     isDisplayCaption: {
-      type: Boolean,
+      type: Boolean as PropType<boolean>,
       default: false,
     },
   },
