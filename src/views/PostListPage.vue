@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 import { config } from '@/configs'
 import PostList from '@/components/organisms/PostList.vue'
 
@@ -18,8 +18,7 @@ export default defineComponent({
   },
 
   setup() {
-    // computed
-    const serviceId = computed(() => config.post.serviceId)
+    const serviceId = config.post.serviceId
 
     return {
       serviceId,

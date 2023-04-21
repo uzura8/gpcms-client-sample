@@ -1,14 +1,14 @@
 import type { AxiosResponse, AxiosError } from 'axios'
+import type { PostPublic, PostsApiResult } from '@/types/Post'
 import { client, getRequestOption } from './client'
-import type { PostPublic } from '@/types/Post'
 
 class PostApi {
-  getList(serviceId: string, params = {}, token = ''): Promise<any> {
+  getList(serviceId: string, params = {}, token = ''): Promise<PostsApiResult> {
     const uri = `posts/${serviceId}`
     const options = getRequestOption(uri, 'get', params, token)
     return new Promise((resolve, reject) => {
       client(options)
-        .then((res: AxiosResponse<PostPublic[]>) => {
+        .then((res: AxiosResponse<PostsApiResult>) => {
           resolve(res.data)
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -17,7 +17,7 @@ class PostApi {
     })
   }
 
-  getOne(serviceId: string, slug = '', params = {}, token = ''): Promise<any> {
+  getOne(serviceId: string, slug: string, params = {}, token = ''): Promise<PostPublic> {
     const uri = `posts/${serviceId}/${slug}`
     const options = getRequestOption(uri, 'get', params, token)
     return new Promise((resolve, reject) => {

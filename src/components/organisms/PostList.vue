@@ -16,7 +16,8 @@
         <a
           @click="setPostList"
           class="cursor-pointer text-blue-600 hover:text-blue-800"
-        >{{ $t('common.more') }}</a>
+          >{{ $t('common.more') }}</a
+        >
       </div>
     </div>
 
@@ -28,6 +29,7 @@
 
 <script lang="ts">
 import type { PostPublic, PagerKey } from '@/types/Post.d'
+import type { PropType } from 'vue'
 import { defineComponent, reactive, ref, computed, onBeforeMount } from 'vue'
 import { PostApi } from '@/apis'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
@@ -39,15 +41,15 @@ interface Params {
 }
 
 export default defineComponent({
-  props: {
-    serviceId: {
-      type: String,
-      default: '',
-    },
+  components: {
+    PostListItem
   },
 
-  components: {
-    PostListItem,
+  props: {
+    serviceId: {
+      type: String as PropType<string>,
+      default: ''
+    }
   },
 
   setup(props) {
@@ -86,12 +88,11 @@ export default defineComponent({
     })
 
     return {
-      serviceId: props.serviceId,
       posts,
       pagerKey,
       setPostList,
-      hasNext,
+      hasNext
     }
-  },
+  }
 })
 </script>

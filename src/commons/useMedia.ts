@@ -17,7 +17,7 @@ export default function useMedia() {
   }
 
   const assetUrl = (path: string) => {
-    let items = [path]
+    const items = [path]
     items.unshift(config.media.url)
     return items.join('/')
   }
