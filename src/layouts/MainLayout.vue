@@ -11,9 +11,7 @@
             <RouterView />
           </main>
 
-          <aside class="md:col-span-3 lg:col-span-2 p-6">
-            Side
-          </aside>
+          <aside class="md:col-span-3 lg:col-span-2 p-6">Side</aside>
         </div>
       </div>
 
@@ -34,7 +32,7 @@ export default defineComponent({
   components: {
     GlobalLoading,
     MainHeader,
-    MainFooter,
+    MainFooter
   },
 
   setup() {
@@ -42,6 +40,6 @@ export default defineComponent({
     const loader = useGlobalLoaderStore()
     const { isLoading: isGlobalLoading } = storeToRefs(loader)
     return { isGlobalLoading }
-  },
+  }
 })
 </script>
