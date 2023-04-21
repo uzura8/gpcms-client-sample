@@ -16,8 +16,9 @@
         <a
           @click="setPostList"
           class="cursor-pointer text-blue-600 hover:text-blue-800"
-          >{{ $t('common.more') }}</a
         >
+          {{ $t('common.more') }}
+        </a>
       </div>
     </div>
 
@@ -65,7 +66,7 @@ export default defineComponent({
 
     // methods
     const setPostList = async () => {
-      globalLoader.updateState(true)
+      globalLoader.updateLoading(true)
       try {
         let params: Params = {}
         if (Object.keys(pagerKey).length > 0) {
@@ -76,10 +77,10 @@ export default defineComponent({
           posts.value.push(item)
         })
         pagerKey = res.pagerKey
-        globalLoader.updateState(false)
+        globalLoader.updateLoading(false)
       } catch (error) {
         console.log(error)
-        globalLoader.updateState(false)
+        globalLoader.updateLoading(false)
       }
     }
 

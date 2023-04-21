@@ -69,14 +69,14 @@ export default defineComponent({
 
     let post = ref({} as PostPublic)
     const setPost = async () => {
-      globalLoader.updateState(true)
+      globalLoader.updateLoading(true)
       try {
         const params = previewToken.value ? { token: previewToken.value } : ''
         post.value = await PostApi.getOne(serviceId, slug.value, params)
-        globalLoader.updateState(false)
+        globalLoader.updateLoading(false)
       } catch (error) {
         console.log(error)
-        globalLoader.updateState(false)
+        globalLoader.updateLoading(false)
       }
     }
 
