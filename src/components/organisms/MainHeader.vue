@@ -55,14 +55,12 @@
         id="navbar-with-collapse"
         class="basis-full grow sm:block"
       >
-        <div
-          class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5"
-        >
+        <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:pl-5">
           <RouterLink
             to="/"
             exact
             :aria-current="current === '/' ? 'page' : null"
-            class="font-medium text-gray-600 text-lg"
+            class="font-medium text-gray-600"
           >
             {{ $t('page.top') }}
           </RouterLink>
@@ -70,7 +68,7 @@
             to="/about"
             exact
             :aria-current="current === '/about' ? 'page' : null"
-            class="font-medium text-gray-600 text-lg"
+            class="font-medium text-gray-600"
           >
             {{ $t('page.about') }}
           </RouterLink>
@@ -78,7 +76,7 @@
             to="/posts"
             exact
             :aria-current="current === '/posts' ? 'page' : null"
-            class="font-medium text-gray-600 text-lg"
+            class="font-medium text-gray-600"
           >
             {{ $t('term.postList') }}
           </RouterLink>
