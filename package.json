@@ -27,7 +27,6 @@
   "devDependencies": {
     "@jridgewell/sourcemap-codec": "^1.4.15",
     "@rushstack/eslint-patch": "^1.2.0",
-    "@types/highlight.js": "^10.1.0",
     "@types/node": "^18.15.12",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
