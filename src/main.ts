@@ -6,12 +6,16 @@ import router from './router'
 import i18n from './i18n'
 import filters from './filters'
 
+import FontAwesomeIcon from './fontawesome'
+
 import './assets/main.css'
 
 const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+
+app.component('FontAwesomeIcon', FontAwesomeIcon)
 
 // Register filters
 declare module '@vue/runtime-core' {
