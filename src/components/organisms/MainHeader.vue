@@ -1,16 +1,16 @@
 <template>
   <header
     id="header"
-    class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-5 px-7 dark:bg-gray-800 z-40"
+    class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-2 xs:px-5 dark:bg-gray-800 z-40"
   >
     <nav
-      class="max-w-[85rem] w-full mx-auto sm:flex sm:items-center sm:justify-between"
+      class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between"
       aria-label="Global"
     >
       <div class="flex items-center justify-between">
         <RouterLink
           to="/"
-          class="flex-none text-3xl font-semibold dark:text-white"
+          class="flex-none text-xl font-medium text-white dark:text-gray-800 py-1"
         >
           {{ siteName }}
         </RouterLink>
@@ -36,9 +36,8 @@
         </div>
       </div>
       <div
-        :class="isMenuOpen ? 'open' : 'hidden'"
         id="navbar-with-collapse"
-        class="basis-full grow sm:block"
+        class="hs-collapse hidden overflow-hidden transition-all ease-in-out duration-300 basis-full grow sm:block md:ml-10"
       >
         <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:pl-5">
           <RouterLink
@@ -72,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { defineComponent, ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import config from '@/configs/config.json'
 import { useGlobalHeaderStore } from '@/stores/globalHeader'
@@ -89,6 +88,30 @@ export default defineComponent({
     const header = ref<HTMLElement | null>(null)
     const globalHeader = useGlobalHeaderStore()
     const isMenuOpen = computed((): boolean => globalHeader.isMenuOpen)
+
+    // Calculate the height of the menu and set it to the animation
+    const setAnimationHeight = (): void => {
+      const navbar = document.getElementById('navbar-with-collapse')
+      if (!navbar) return
+
+      if (isMenuOpen.value) {
+        navbar.style.maxHeight = '0'
+        navbar.classList.remove('hidden')
+        navbar.classList.add('open')
+        navbar.style.maxHeight = `${navbar.scrollHeight}px`
+      } else {
+        navbar.style.maxHeight = '0'
+        navbar.classList.remove('open')
+        setTimeout(() => {
+          navbar.classList.add('hidden')
+          navbar.style.maxHeight = ''
+        }, 300)
+      }
+    }
+
+    watch(isMenuOpen, () => {
+      setAnimationHeight()
+    })
 
     const toggleHeaderMenuOpenStatus = () => {
       globalHeader.updateMenuOpenStatus(!isMenuOpen.value)
