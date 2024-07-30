@@ -44,5 +44,6 @@ export interface PagerKey {
 
 export interface PostsApiResult {
   items: PostPublic[]
-  pagerKey: PagerKey
+  pagerKey?: PagerKey
+  pageToken?: string
 }

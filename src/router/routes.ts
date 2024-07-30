@@ -27,7 +27,12 @@ const routes: RouteRecordRaw[] = [
         name: 'PostDetailPage',
         component: () => import('@/views/PostDetailPage.vue')
       },
-    ],
+      {
+        path: '/tags/:tagLabel/posts',
+        name: 'PostListByTagPage',
+        component: () => import('@/views/PostListByTagPage.vue')
+      }
+    ]
   },
   //{
   //  path: '/admin',
@@ -37,7 +42,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:catchAll(.*)*',
     component: () => import('@/views/NotFound.vue')
-  },
+  }
 ]
 
 export default routes

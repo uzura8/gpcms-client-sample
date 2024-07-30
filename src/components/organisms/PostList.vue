@@ -1,3 +1,91 @@
+<script lang="ts">
+import type { PostPublic, PagerKey } from '@/types/Post.d'
+import type { PropType } from 'vue'
+import { defineComponent, reactive, ref, computed, watch, onBeforeMount } from 'vue'
+import { PostApi } from '@/apis'
+import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
+import PostListItem from '@/components/organisms/PostListItem.vue'
+
+// Types
+interface Params {
+  pagerKey?: string
+  pageToken?: string
+  tag?: string
+}
+
+export default defineComponent({
+  components: {
+    PostListItem
+  },
+
+  props: {
+    serviceId: {
+      type: String as PropType<string>,
+      default: ''
+    },
+
+    tagLabel: {
+      type: String as PropType<string>,
+      default: ''
+    }
+  },
+
+  setup(props) {
+    const globalLoader = useGlobalLoaderStore()
+    const isLoading = computed(() => globalLoader.isLoading)
+
+    let posts = reactive([] as PostPublic[])
+
+    let pageToken = ref<string | undefined>('')
+    const hasNext = computed(() => Boolean(pageToken.value))
+
+    // methods
+    const setPostList = async () => {
+      globalLoader.updateLoading(true)
+      try {
+        let params: Params = {}
+        if (pageToken.value) {
+          params.pageToken = pageToken.value
+        }
+        if (props.tagLabel) {
+          params.tag = props.tagLabel
+        }
+        const res = await PostApi.getList(props.serviceId, params)
+        res.items.map((item: PostPublic) => {
+          posts.push(item)
+        })
+        pageToken.value = res.pageToken
+        globalLoader.updateLoading(false)
+      } catch (error) {
+        console.log(error)
+        globalLoader.updateLoading(false)
+      }
+    }
+
+    onBeforeMount(async () => {
+      await setPostList()
+    })
+
+    watch(
+      () => props.tagLabel,
+      async () => {
+        posts = []
+        pageToken.value = ''
+        await setPostList()
+      }
+    )
+
+    return {
+      posts,
+      pageToken,
+      setPostList,
+      hasNext,
+      isLoading
+    }
+  }
+})
+</script>
+
 <template>
   <div>
     <div
@@ -22,78 +110,8 @@
       </div>
     </div>
 
-    <div v-else>
+    <div v-else-if="!isLoading">
       <p class="text-gray-500 text-center">{{ $t('msg.noData') }}</p>
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import type { PostPublic, PagerKey } from '@/types/Post.d'
-import type { PropType } from 'vue'
-import { defineComponent, reactive, ref, computed, onBeforeMount } from 'vue'
-import { PostApi } from '@/apis'
-import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
-import PostListItem from '@/components/organisms/PostListItem.vue'
-
-// Types
-interface Params {
-  pagerKey?: string
-}
-
-export default defineComponent({
-  components: {
-    PostListItem
-  },
-
-  props: {
-    serviceId: {
-      type: String as PropType<string>,
-      default: ''
-    }
-  },
-
-  setup(props) {
-    // data
-    let posts = ref([] as PostPublic[])
-    let pagerKey = reactive({} as PagerKey)
-
-    // store
-    const globalLoader = useGlobalLoaderStore()
-
-    // computed
-    const hasNext = computed(() => Boolean(pagerKey))
-
-    // methods
-    const setPostList = async () => {
-      globalLoader.updateLoading(true)
-      try {
-        let params: Params = {}
-        if (Object.keys(pagerKey).length > 0) {
-          params.pagerKey = JSON.stringify(pagerKey)
-        }
-        const res = await PostApi.getList(props.serviceId, params)
-        res.items.map((item: PostPublic) => {
-          posts.value.push(item)
-        })
-        pagerKey = res.pagerKey
-        globalLoader.updateLoading(false)
-      } catch (error) {
-        console.log(error)
-        globalLoader.updateLoading(false)
-      }
-    }
-
-    onBeforeMount(async () => {
-      await setPostList()
-    })
-
-    return {
-      posts,
-      pagerKey,
-      setPostList,
-      hasNext
-    }
-  }
-})
-</script>

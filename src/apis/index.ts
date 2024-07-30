@@ -1,5 +1,4 @@
 import PostApi from './post'
+import TagApi from './tag'
 
-export {
-  PostApi,
-}
+export { PostApi, TagApi }

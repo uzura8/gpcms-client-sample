@@ -4,3 +4,8 @@ export interface Tag {
   label: string
   createdAt: string
 }
+
+export interface TagsApiResult {
+  items: Tag[]
+  pageToken: string
+}
