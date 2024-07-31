@@ -1,7 +1,10 @@
 <template>
-  <div class="bg-white overflow-hidden rounded-lg shadow-md grid grid-cols-1 md:grid-cols-3">
+  <div
+    v-if="post"
+    class="bg-white overflow-hidden rounded-lg shadow-md grid grid-cols-1 md:grid-cols-3"
+  >
     <div
-      v-if="post.images.length > 0"
+      v-if="post.images && post.images.length > 0"
       class="relative col-span-2 md:col-span-1"
     >
       <MediaImg
@@ -19,7 +22,10 @@
           >{{ post.title }}</RouterLink
         >
       </h3>
-      <p class="text-gray-500 leading-relaxed mb-4">
+      <p
+        v-if="post.bodyText"
+        class="text-gray-500 leading-relaxed mb-4"
+      >
         {{ $filters.substr(post.bodyText, 300) }}
       </p>
       <RouterLink

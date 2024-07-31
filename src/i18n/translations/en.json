@@ -54,6 +54,7 @@
     "postsOf": "Posts of {label}",
     "category": "Category",
     "categories": "Categories",
+    "categoriesShort": "Categories",
     "parentCategory": "Parent Category",
     "tag": "Tag",
     "tags": "Tags",

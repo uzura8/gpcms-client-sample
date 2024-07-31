@@ -1,7 +1,7 @@
 <script lang="ts">
-import type { PostPublic, PagerKey } from '@/types/Post.d'
+import type { PostPublic } from '@/types/Post.d'
 import type { PropType } from 'vue'
-import { defineComponent, reactive, ref, computed, watch, onBeforeMount } from 'vue'
+import { defineComponent, ref, computed, watch, onBeforeMount } from 'vue'
 import { PostApi } from '@/apis'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import PostListItem from '@/components/organisms/PostListItem.vue'
@@ -34,9 +34,8 @@ export default defineComponent({
     const globalLoader = useGlobalLoaderStore()
     const isLoading = computed(() => globalLoader.isLoading)
 
-    let posts = reactive([] as PostPublic[])
-
-    let pageToken = ref<string | undefined>('')
+    const posts = ref<PostPublic[]>([])
+    const pageToken = ref<string | undefined>('')
     const hasNext = computed(() => Boolean(pageToken.value))
 
     // methods
@@ -52,7 +51,7 @@ export default defineComponent({
         }
         const res = await PostApi.getList(props.serviceId, params)
         res.items.map((item: PostPublic) => {
-          posts.push(item)
+          posts.value.push(item)
         })
         pageToken.value = res.pageToken
         globalLoader.updateLoading(false)
@@ -69,7 +68,7 @@ export default defineComponent({
     watch(
       () => props.tagLabel,
       async () => {
-        posts = []
+        posts.value = []
         pageToken.value = ''
         await setPostList()
       }
