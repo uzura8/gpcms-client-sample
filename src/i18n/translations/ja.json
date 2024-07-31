@@ -247,6 +247,7 @@
     "rawHtml": "生HTML",
     "postList": "投稿一覧",
     "postGroup": "投稿グループ",
+    "postGroupShort": "グループ",
     "hiddenInListLabel": "一覧非表示",
     "availableFunctions": {
       "post": "投稿"

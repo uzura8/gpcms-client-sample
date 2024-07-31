@@ -246,6 +246,7 @@
     "rawHtml": "raw HTML",
     "postList": "Posts",
     "postGroup": "Post Group",
+    "postGroupShort": "Group",
     "hiddenInListLabel": "Not in list",
     "availableFunctions": {
       "post": "Post"

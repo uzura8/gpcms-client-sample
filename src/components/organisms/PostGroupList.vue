@@ -1,10 +1,10 @@
 <script lang="ts">
-import type { Tag } from '@/types/Tag'
+import type { PostGroupPublic } from '@/types/PostGroup'
 import type { ApiListParams } from '@/types/Common'
 import { defineComponent, ref, reactive, onBeforeMount, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
-import { TagApi } from '@/apis'
+import { postGroupApi } from '@/apis'
 
 export default defineComponent({
   components: {},
@@ -19,23 +19,23 @@ export default defineComponent({
   setup(props) {
     const globalLoader = useGlobalLoaderStore()
 
-    const tags = reactive([] as Tag[])
-    const pageTokenTags = ref<string | undefined>('')
-    const hasNextTags = computed(() => {
-      return !!pageTokenTags.value
+    const postGroups = reactive([] as PostGroupPublic[])
+    const pageToken = ref<string | undefined>('')
+    const hasNext = computed(() => {
+      return !!pageToken.value
     })
 
-    const setTags = async () => {
+    const setPostGroups = async () => {
       try {
         globalLoader.updateLoading(true)
         let params: ApiListParams = {}
         // params.count = 3 // debug
-        params.pageToken = pageTokenTags.value
-        const res = await TagApi.getList(props.serviceId, params)
-        res.items.map((item: Tag) => {
-          tags.push(item)
+        params.pageToken = pageToken.value
+        const res = await postGroupApi.getList(props.serviceId, params)
+        res.items.map((item: PostGroupPublic) => {
+          postGroups.push(item)
         })
-        pageTokenTags.value = res.pageToken
+        pageToken.value = res.pageToken
       } catch (error) {
         console.log(error)
       } finally {
@@ -44,13 +44,13 @@ export default defineComponent({
     }
 
     onBeforeMount(async () => {
-      await setTags()
+      await setPostGroups()
     })
 
     return {
-      tags,
-      hasNextTags,
-      setTags
+      postGroups,
+      hasNext,
+      setPostGroups
     }
   }
 })
@@ -59,27 +59,27 @@ export default defineComponent({
 <template>
   <nav class="text-gray-500 dark:text-gray-400">
     <ul
-      v-if="tags.length > 0"
+      v-if="postGroups.length > 0"
       class="space-y-2"
     >
       <li
-        v-for="tag in tags"
-        :key="tag.label"
+        v-for="postGroup in postGroups"
+        :key="postGroup.label"
       >
         <RouterLink
-          :to="`/tags/${tag.label}/posts`"
+          :to="`/post-groups/${postGroup.slug}/posts`"
           class="block py-2 hover:underline hover:text-blue-600 dark:hover:text-blue-500"
         >
-          {{ tag.label }}
+          {{ postGroup.label }}
         </RouterLink>
       </li>
     </ul>
     <div
-      v-if="hasNextTags"
+      v-if="hasNext"
       class="mt-2"
     >
       <button
-        @click="setTags"
+        @click="setPostGroups"
         class="text-sm text-gray-500 dark:text-gray-400 hover:underline hover:text-blue-600 dark:hover:text-blue-500"
       >
         {{ $t('common.more') }}
