@@ -1,5 +1,5 @@
 import type { AxiosResponse, AxiosError } from 'axios'
-import type { ApiListResponsePostGroup } from '@/types/PostGroup'
+import type { PostGroupPublic, ApiListResponsePostGroup } from '@/types/PostGroup'
 import { client, getRequestOption } from './client'
 
 class PostGroupApi {
@@ -9,6 +9,20 @@ class PostGroupApi {
     return new Promise((resolve, reject) => {
       client(options)
         .then((res: AxiosResponse<ApiListResponsePostGroup>) => {
+          resolve(res.data)
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+          reject(err)
+        })
+    })
+  }
+
+  getOne(serviceId: string, slug: string, params = null, token = ''): Promise<PostGroupPublic> {
+    const uri = `posts/${serviceId}/groups/${slug}`
+    const options = getRequestOption(uri, 'get', params, token)
+    return new Promise((resolve, reject) => {
+      client(options)
+        .then((res: AxiosResponse<PostGroupPublic>) => {
           resolve(res.data)
         })
         .catch((err: AxiosError<{ error: string }>) => {

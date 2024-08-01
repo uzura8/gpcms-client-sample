@@ -4,7 +4,7 @@ import type { ApiListParams } from '@/types/Common'
 import { defineComponent, ref, reactive, onBeforeMount, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
-import { postGroupApi } from '@/apis'
+import { PostGroupApi } from '@/apis'
 
 export default defineComponent({
   components: {},
@@ -31,7 +31,7 @@ export default defineComponent({
         let params: ApiListParams = {}
         // params.count = 3 // debug
         params.pageToken = pageToken.value
-        const res = await postGroupApi.getList(props.serviceId, params)
+        const res = await PostGroupApi.getList(props.serviceId, params)
         res.items.map((item: PostGroupPublic) => {
           postGroups.push(item)
         })
