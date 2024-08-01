@@ -16,6 +16,6 @@ export default defineComponent({
   setup() {
     const footerRight = computed((): string => config.site.footerRight)
     return { footerRight }
-  },
+  }
 })
 </script>

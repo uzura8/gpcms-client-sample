@@ -1,7 +1,6 @@
 <script lang="ts">
 import type { CategoryPublic, ApiListParamsCategory } from '@/types/Category'
-import { defineComponent, ref, watch, onBeforeMount } from 'vue'
-import { useRoute } from 'vue-router'
+import { defineComponent, ref, onBeforeMount } from 'vue'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { CategoryApi } from '@/apis'
 import CategoryListItem from '@/components/organisms/CategoryListItem.vue'
@@ -21,7 +20,6 @@ export default defineComponent({
   setup(props) {
     const maxNodeDepth = 2
 
-    const route = useRoute()
     const globalLoader = useGlobalLoaderStore()
 
     const categories = ref<CategoryPublic[]>([])

@@ -39,12 +39,14 @@
 </template>
 
 <script lang="ts">
-import type { PostPublic } from '@/types/Post.d'
+import type { HeadMetaInput } from '@/types/Common'
+import type { PostPublic } from '@/types/Post'
 import { defineComponent, computed, ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
+import { useHeadMeta } from '@/composables/useHeadMeta'
 import { config } from '@/configs'
-import { obj, date } from '@/utils'
+import { obj, date, str } from '@/utils'
 import { PostApi } from '@/apis'
 import PostBody from '@/components/atoms/PostBody.vue'
 
@@ -58,6 +60,7 @@ export default defineComponent({
 
     const serviceId = config.post.serviceId
     const globalLoader = useGlobalLoaderStore()
+    const { setMeta } = useHeadMeta()
 
     const slug = computed(() => {
       return route.params.slug ? (route.params.slug as string) : ''
@@ -73,6 +76,16 @@ export default defineComponent({
       try {
         const params = previewToken.value ? { token: previewToken.value } : ''
         post.value = await PostApi.getOne(serviceId, slug.value, params)
+
+        const metaObj: HeadMetaInput = {
+          title: post.value.title,
+          urlPath: route.path
+        }
+        if (post.value.bodyText) {
+          metaObj.description = str.substr(post.value.bodyText, 100, '...')
+        }
+        setMeta(metaObj)
+
         globalLoader.updateLoading(false)
       } catch (error) {
         console.log(error)

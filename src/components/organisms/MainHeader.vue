@@ -122,11 +122,9 @@ export default defineComponent({
         globalHeader.updateMenuOpenStatus(false)
       }
     }
-
     onMounted(async () => {
-      await nextTick(() => {
-        header.value = document.querySelector('#header')
-      })
+      await nextTick()
+      header.value = document.querySelector('#header')
       document.addEventListener('click', handleClickOutside)
     })
 

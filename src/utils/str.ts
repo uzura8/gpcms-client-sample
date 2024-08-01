@@ -1,5 +1,5 @@
 export default {
-  substr(text: string, len: number, truncation='') :string {
+  substr(text: string, len: number, truncation = ''): string {
     const textArray = text.split('')
     let count = 0
     let str = ''
@@ -8,7 +8,7 @@ export default {
       if (n.length < 4) {
         count++
       } else {
-        count += 2;
+        count += 2
       }
       if (count > len) {
         return str + truncation

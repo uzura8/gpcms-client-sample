@@ -2,7 +2,6 @@
 import type { PostGroupPublic } from '@/types/PostGroup'
 import type { ApiListParams } from '@/types/Common'
 import { defineComponent, ref, reactive, onBeforeMount, computed } from 'vue'
-import { RouterLink } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { PostGroupApi } from '@/apis'
 
