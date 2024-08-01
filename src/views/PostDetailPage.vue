@@ -21,7 +21,7 @@
         >
       </div>
 
-      <ul v-if="hasKey(post, 'tags', true)">
+      <ul v-if="post && post.tags">
         <li
           v-for="tag in post.tags"
           :key="tag.tagId"
