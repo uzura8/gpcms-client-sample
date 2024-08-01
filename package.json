@@ -16,6 +16,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@unhead/vue": "^1.9.16",
     "axios": "^1.7.2",
     "highlight.js": "^11.10.0",
     "moment": "^2.30.1",
@@ -23,7 +24,8 @@
     "unhead": "^1.9.16",
     "vue": "^3.4.35",
     "vue-i18n": "^9.13.1",
-    "vue-router": "^4.4.1"
+    "vue-router": "^4.4.1",
+    "vue3-toastify": "^0.2.2"
   },
   "devDependencies": {
     "@jridgewell/sourcemap-codec": "^1.5.0",
