@@ -100,7 +100,7 @@ export default defineComponent({
       </button>
       <div v-else>
         <RouterLink
-          :to="`/categories/${cate.slug}`"
+          :to="`/categories/${cate.slug}/posts`"
           class="flex items-center justify-between w-full font-medium text-left text-gray-500 dark:text-gray-400"
           :class="{
             'border-b border-gray-200 dark:border-gray-700': !isLast && isBorder,

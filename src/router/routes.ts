@@ -28,6 +28,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/PostDetailPage.vue')
       },
       {
+        path: '/categories/:slug/posts',
+        name: 'PostListByCategoryPage',
+        component: () => import('@/views/PostListByCategoryPage.vue')
+      },
+      {
         path: '/tags/:tagLabel/posts',
         name: 'PostListByTagPage',
         component: () => import('@/views/PostListByTagPage.vue')

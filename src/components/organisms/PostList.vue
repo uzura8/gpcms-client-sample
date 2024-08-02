@@ -1,13 +1,11 @@
 <script lang="ts">
-import type { PostPublic } from '@/types/Post.d'
 import type { PropType } from 'vue'
 import type { PostsCondition } from '@/stores/posts'
-import { defineComponent, ref, computed, watch, onBeforeMount } from 'vue'
+import { defineComponent, ref, computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useGlobalLoaderStore } from '@/stores/globalLoader'
 import { usePostsStore } from '@/stores/posts'
 import { PostApi } from '@/apis'
-import { serializeURL } from '@/utils/str'
 import PostListItem from '@/components/organisms/PostListItem.vue'
 
 // Types
@@ -15,6 +13,8 @@ interface Params {
   pagerKey?: string
   pageToken?: string
   tag?: string
+  category?: string
+  apiVer?: number
 }
 
 export default defineComponent({
@@ -27,7 +27,10 @@ export default defineComponent({
       type: String as PropType<string>,
       default: ''
     },
-
+    categorySlug: {
+      type: String as PropType<string>,
+      default: ''
+    },
     tagLabel: {
       type: String as PropType<string>,
       default: ''
@@ -52,6 +55,9 @@ export default defineComponent({
       if (props.tagLabel) {
         current.type = 'tag'
         current.value = props.tagLabel
+      } else if (props.categorySlug) {
+        current.type = 'category'
+        current.value = props.categorySlug
       }
       return current
     })
@@ -65,6 +71,9 @@ export default defineComponent({
         }
         if (props.tagLabel) {
           params.tag = props.tagLabel
+        } else if (props.categorySlug) {
+          params.category = props.categorySlug
+          params.apiVer = 2
         }
         const res = await PostApi.getList(props.serviceId, params)
         postsStore.setApiResult(res, postsCondition.value)
