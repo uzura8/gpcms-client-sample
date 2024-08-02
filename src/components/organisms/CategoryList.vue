@@ -29,6 +29,7 @@ export default defineComponent({
         globalLoader.updateLoading(true)
         let params: ApiListParamsCategory = {}
         params.subScope = 'direct'
+        params.apiVer = 2
         const res = await CategoryApi.getOneBySlug(props.serviceId, 'root', params)
         if (res.children) {
           categories.value = res.children

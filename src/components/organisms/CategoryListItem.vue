@@ -46,7 +46,7 @@ export default defineComponent({
     })
 
     const setCates = async () => {
-      const params = { subScope: 'direct' }
+      const params = { subScope: 'direct', apiVer: 2 }
       const parent = await CategoryApi.getOneBySlug(serviceId.value, props.cate.slug, params)
       if (parent && parent.children) {
         childCates.value = parent.children

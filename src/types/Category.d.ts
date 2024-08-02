@@ -10,4 +10,5 @@ export interface CategoryPublic {
 export interface ApiListParamsCategory {
   withParent?: boolean
   subScope?: string
+  apiVer?: number
 }
