@@ -1,8 +1,8 @@
-const hasKey = (
+export function hasKey(
   obj: Record<string, unknown>,
   prop: string,
   checkEmpty: boolean = false
-): boolean => {
+): boolean {
   if (typeof obj !== 'object') return false
   if (Array.isArray(obj)) return false
   if (!Object.prototype.hasOwnProperty.call(obj, prop)) return false
@@ -12,7 +12,7 @@ const hasKey = (
   return Boolean(obj[prop])
 }
 
-const isEmpty = (data: unknown): boolean => {
+export function isEmptyObj(data: unknown): boolean {
   if (
     data === null ||
     data === undefined ||
@@ -37,14 +37,48 @@ const isEmpty = (data: unknown): boolean => {
     if (typeof valueOfData === 'string' || Array.isArray(valueOfData)) {
       return valueOfData.length === 0
     } else if (typeof valueOfData !== 'object') {
-      return isEmpty(valueOfData)
+      return isEmptyObj(valueOfData)
     }
   }
 
   return false
 }
 
-export default {
-  hasKey,
-  isEmpty
+export function isEqualObjs(obj1: any, obj2: any): boolean {
+  // 両方が同じオブジェクトの参照であれば true
+  if (obj1 === obj2) {
+    return true
+  }
+
+  // 型がオブジェクトでない場合、またはどちらかが null なら false
+  if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 === null) {
+    return false
+  }
+
+  const keys1 = Object.keys(obj1)
+  const keys2 = Object.keys(obj2)
+
+  // オブジェクトのキーの数が異なる場合は false
+  if (keys1.length !== keys2.length) {
+    return false
+  }
+
+  // obj1 の各キーに対して再帰的に比較
+  for (let key of keys1) {
+    if (!keys2.includes(key)) {
+      return false
+    }
+
+    // 値がオブジェクトの場合、再帰的に isEqual を呼び出す
+    if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+      if (!isEqualObjs(obj1[key], obj2[key])) {
+        return false
+      }
+    } else if (obj1[key] !== obj2[key]) {
+      // プリミティブ値の場合、直接比較
+      return false
+    }
+  }
+
+  return true
 }

@@ -26,7 +26,7 @@
         v-if="post.bodyText"
         class="text-gray-500 leading-relaxed mb-4"
       >
-        {{ $filters.substr(post.bodyText, 300) }}
+        {{ substr(post.bodyText, 300) }}
       </p>
       <RouterLink
         :to="`/posts/${post.slug}`"
@@ -41,6 +41,7 @@
 import type { PostPublic } from '@/types/Post.d'
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
+import { substr } from '@/utils/str'
 import MediaImg from '@/components/atoms/MediaImg.vue'
 
 export default defineComponent({
@@ -52,6 +53,12 @@ export default defineComponent({
     post: {
       type: Object as PropType<PostPublic>,
       required: true
+    }
+  },
+
+  setup(props) {
+    return {
+      substr
     }
   }
 })

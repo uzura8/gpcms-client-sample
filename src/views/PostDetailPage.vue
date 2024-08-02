@@ -46,7 +46,8 @@ import { useRoute } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { useHeadMeta } from '@/composables/useHeadMeta'
 import { config } from '@/configs'
-import { obj, date, str } from '@/utils'
+import { date } from '@/utils'
+import { substr } from '@/utils/str'
 import { PostApi } from '@/apis'
 import PostBody from '@/components/atoms/PostBody.vue'
 
@@ -82,7 +83,7 @@ export default defineComponent({
           urlPath: route.path
         }
         if (post.value.bodyText) {
-          metaObj.description = str.substr(post.value.bodyText, 100, '...')
+          metaObj.description = substr(post.value.bodyText, 100, '...')
         }
         setMeta(metaObj)
 
@@ -101,7 +102,6 @@ export default defineComponent({
       post,
       serviceId,
       dateFomat: date.formatDate,
-      hasKey: obj.hasKey,
       setPost
     }
   }

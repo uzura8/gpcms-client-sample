@@ -1,7 +1,7 @@
-import { str } from '@/utils'
+import { substr } from '@/utils/str'
 
 export default {
   substr(text: string, num: number) {
-    return str.substr(text, num, '...')
+    return substr(text, num, '...')
   }
 }
