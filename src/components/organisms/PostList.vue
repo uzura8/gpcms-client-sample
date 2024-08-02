@@ -1,9 +1,13 @@
 <script lang="ts">
 import type { PostPublic } from '@/types/Post.d'
 import type { PropType } from 'vue'
+import type { PostsCondition } from '@/stores/posts'
 import { defineComponent, ref, computed, watch, onBeforeMount } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useGlobalLoaderStore } from '@/stores/globalLoader'
+import { usePostsStore } from '@/stores/posts'
 import { PostApi } from '@/apis'
-import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
+import { serializeURL } from '@/utils/str'
 import PostListItem from '@/components/organisms/PostListItem.vue'
 
 // Types
@@ -34,11 +38,24 @@ export default defineComponent({
     const globalLoader = useGlobalLoaderStore()
     const isLoading = computed(() => globalLoader.isLoading)
 
-    const posts = ref<PostPublic[]>([])
-    const pageToken = ref<string | undefined>('')
-    const hasNext = computed(() => Boolean(pageToken.value))
+    const postsStore = usePostsStore()
+    const { posts, pageToken } = storeToRefs(postsStore)
 
-    // methods
+    const hasNext = computed(() => !!pageToken.value)
+
+    const postsCondition = computed(() => {
+      const current: PostsCondition = {
+        serviceId: props.serviceId,
+        type: '',
+        value: ''
+      }
+      if (props.tagLabel) {
+        current.type = 'tag'
+        current.value = props.tagLabel
+      }
+      return current
+    })
+
     const setPostList = async () => {
       globalLoader.updateLoading(true)
       try {
@@ -50,10 +67,7 @@ export default defineComponent({
           params.tag = props.tagLabel
         }
         const res = await PostApi.getList(props.serviceId, params)
-        res.items.map((item: PostPublic) => {
-          posts.value.push(item)
-        })
-        pageToken.value = res.pageToken
+        postsStore.setApiResult(res, postsCondition.value)
         globalLoader.updateLoading(false)
       } catch (error) {
         console.log(error)
@@ -61,17 +75,15 @@ export default defineComponent({
       }
     }
 
-    onBeforeMount(async () => {
-      await setPostList()
-    })
-
     watch(
-      () => props.tagLabel,
-      async () => {
-        posts.value = []
-        pageToken.value = ''
-        await setPostList()
-      }
+      () => postsCondition.value,
+      async (val) => {
+        if (postsStore.checkConditionChanged(val)) {
+          postsStore.clearList()
+          await setPostList()
+        }
+      },
+      { immediate: true, deep: true }
     )
 
     return {

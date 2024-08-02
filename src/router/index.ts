@@ -11,14 +11,14 @@ const scrollBehavior: RouterScrollBehavior = (to, _from, savedPosition) => {
           el: to.hash,
           behavior: 'smooth'
         })
-      }, 100)
+      }, 500)
     })
   } else if (savedPosition) {
     return new Promise((resolve) => {
       setTimeout(() => {
         //savedPosition.behavior = 'smooth'
         resolve(savedPosition)
-      }, 1000)
+      }, 500)
     })
   } else {
     return { left: 0, top: 0 }
