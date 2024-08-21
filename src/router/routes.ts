@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'TopPage',
-        component: () => import('@/views/TopPage.vue')
+        component: () => import('@/views/PostListPage.vue')
       },
       {
         path: '/about',
