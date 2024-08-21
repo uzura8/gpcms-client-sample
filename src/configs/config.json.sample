@@ -15,6 +15,7 @@
     "url": "https://media.example.com"
   },
   "post": {
-    "serviceId": "your-serviceId"
+    "serviceId": "your-serviceId",
+    "listImageSize": "1200x800x"
   }
 }

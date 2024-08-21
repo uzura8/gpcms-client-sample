@@ -11,7 +11,7 @@
         :service-id="post.serviceId"
         :file-id="post.images[0].fileId"
         :mime-type="post.images[0].mimeType"
-        size="1200x800xc"
+        :size="imageSize"
       />
     </div>
     <div class="p-6 col-span-1 sm:col-span-2">
@@ -38,11 +38,12 @@
 </template>
 
 <script lang="ts">
-import type { PostPublic } from '@/types/Post.d'
+import type { PostPublic } from '@/types/Post'
 import type { PropType } from 'vue'
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { substr } from '@/utils/str'
 import MediaImg from '@/components/atoms/MediaImg.vue'
+import config from '@/configs/config.json'
 
 export default defineComponent({
   components: {
@@ -57,8 +58,13 @@ export default defineComponent({
   },
 
   setup(props) {
+    const imageSize = computed((): string => {
+      return config.post.listImageSize
+    })
+
     return {
-      substr
+      substr,
+      imageSize
     }
   }
 })

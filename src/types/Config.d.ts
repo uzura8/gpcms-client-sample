@@ -14,6 +14,7 @@ interface Api {
 
 interface Post {
   serviceId: string
+  listImageSize: string
 }
 
 export interface Config {
