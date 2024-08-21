@@ -46,4 +46,7 @@ export interface PostsApiResult {
   items: PostPublic[]
   pagerKey?: PagerKey
   pageToken?: string
+  meta?: {
+    category?: CategoryPublic
+  }
 }

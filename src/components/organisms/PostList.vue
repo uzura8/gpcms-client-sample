@@ -37,7 +37,9 @@ export default defineComponent({
     }
   },
 
-  setup(props) {
+  emits: ['updateCategory'],
+
+  setup(props, context) {
     const globalLoader = useGlobalLoaderStore()
     const isLoading = computed(() => globalLoader.isLoading)
 
@@ -77,6 +79,9 @@ export default defineComponent({
         }
         const res = await PostApi.getList(props.serviceId, params)
         postsStore.setApiResult(res, postsCondition.value)
+        if (res.meta && res.meta.category) {
+          context.emit('updateCategory', res.meta.category)
+        }
         globalLoader.updateLoading(false)
       } catch (error) {
         console.log(error)
