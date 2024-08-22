@@ -10,7 +10,7 @@
       <div class="flex items-center justify-between">
         <RouterLink
           to="/"
-          class="flex-none text-xl font-medium text-white dark:text-gray-800 py-1"
+          class="flex-none text-xl font-medium text-gray-800 dark:text-white py-1"
         >
           {{ siteName }}
         </RouterLink>
@@ -122,11 +122,9 @@ export default defineComponent({
         globalHeader.updateMenuOpenStatus(false)
       }
     }
-
     onMounted(async () => {
-      await nextTick(() => {
-        header.value = document.querySelector('#header')
-      })
+      await nextTick()
+      header.value = document.querySelector('#header')
       document.addEventListener('click', handleClickOutside)
     })
 

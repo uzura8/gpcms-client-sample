@@ -1,7 +1,8 @@
 {
   "site": {
     "name": "Your SiteName",
-    "footerRight": "&copy;Your Organization. 2023. All rights reserved."
+    "footerRight": "&copy;Your Organization. 2023. All rights reserved.",
+    "baseUrl": "http://example.com"
   },
   "common": {
     "loadingTimeoutThreshold": 10000
@@ -14,6 +15,7 @@
     "url": "https://media.example.com"
   },
   "post": {
-    "serviceId": "your-serviceId"
+    "serviceId": "your-serviceId",
+    "listImageSize": "1200x800x"
   }
 }

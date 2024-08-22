@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'TopPage',
-        component: () => import('@/views/TopPage.vue')
+        component: () => import('@/views/PostListPage.vue')
       },
       {
         path: '/about',
@@ -27,7 +27,22 @@ const routes: RouteRecordRaw[] = [
         name: 'PostDetailPage',
         component: () => import('@/views/PostDetailPage.vue')
       },
-    ],
+      {
+        path: '/categories/:slug/posts',
+        name: 'PostListByCategoryPage',
+        component: () => import('@/views/PostListByCategoryPage.vue')
+      },
+      {
+        path: '/tags/:tagLabel/posts',
+        name: 'PostListByTagPage',
+        component: () => import('@/views/PostListByTagPage.vue')
+      },
+      {
+        path: '/post-groups/:slug/posts',
+        name: 'PostListByGroupPage',
+        component: () => import('@/views/PostListByGroupPage.vue')
+      }
+    ]
   },
   //{
   //  path: '/admin',
@@ -37,7 +52,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:catchAll(.*)*',
     component: () => import('@/views/NotFound.vue')
-  },
+  }
 ]
 
 export default routes

@@ -2,7 +2,7 @@
   <div>
     <h1 class="text-4xl font-extrabold dark:text-white">{{ $t('term.postList') }}</h1>
     <div class="container mx-auto py-8">
-      <PostList :service-id="serviceId"/>
+      <PostList :service-id="serviceId" />
     </div>
   </div>
 </template>
@@ -14,15 +14,15 @@ import PostList from '@/components/organisms/PostList.vue'
 
 export default defineComponent({
   components: {
-    PostList,
+    PostList
   },
 
   setup() {
     const serviceId = config.post.serviceId
 
     return {
-      serviceId,
+      serviceId
     }
-  },
+  }
 })
 </script>

@@ -7,11 +7,13 @@
 
       <div class="flex-1">
         <div class="lg:grid lg:grid-cols-12 h-full max-w-[85rem] mx-auto">
-          <main class="lg:col-span-9 lg:col-span-10 px-6 py-8">
+          <main class="lg:col-span-9 xl:col-span-10 px-6 py-8">
             <RouterView />
           </main>
 
-          <aside class="md:col-span-3 lg:col-span-2 p-6">Side</aside>
+          <aside class="lg:col-span-3 xl:col-span-2 px-6 py-8">
+            <MainSideMenu />
+          </aside>
         </div>
       </div>
 
@@ -26,12 +28,14 @@ import { storeToRefs } from 'pinia'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import GlobalLoading from '@/components/molecules/GlobalLoading.vue'
 import MainHeader from '@/components/organisms/MainHeader.vue'
+import MainSideMenu from '@/components/organisms/MainSideMenu.vue'
 import MainFooter from '@/components/organisms/MainFooter.vue'
 
 export default defineComponent({
   components: {
     GlobalLoading,
     MainHeader,
+    MainSideMenu,
     MainFooter
   },
 
