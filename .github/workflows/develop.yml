@@ -28,7 +28,6 @@ jobs:
 
       - name: Download config file from S3
         env:
-          # S3_CONFIG_BUCKET: ${{ secrets.S3_CONFIG_BUCKET_DEV }}
           S3_CONFIG_BUCKET: ${{ vars.S3_CONFIG_BUCKET_DEV }}
         run: |
           aws s3 cp s3://$S3_CONFIG_BUCKET/config.json ./src/configs/ --quiet
@@ -43,7 +42,6 @@ jobs:
 
       - name: Copy Files to s3
         env:
-          # S3_RESOURCE_BUCKET: ${{ secrets.S3_RESOURCE_BUCKET_DEV }}
           S3_RESOURCE_BUCKET: ${{ vars.S3_RESOURCE_BUCKET_DEV }}
         run: |
           aws s3 sync ./public s3://$S3_RESOURCE_BUCKET
@@ -52,7 +50,6 @@ jobs:
       - name: Clear cache in CloudFront
         uses: chetan/invalidate-cloudfront-action@v1.2
         env:
-          # DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_DEV }}
           DISTRIBUTION: ${{ vars.CLOUDFRONT_DISTRIBUTION_DEV }}
           PATHS: '/*'
           AWS_REGION: ap-northeast-1
