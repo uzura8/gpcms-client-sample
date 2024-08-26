@@ -13,8 +13,8 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
 1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
 ## Customize configuration
@@ -44,3 +44,23 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Setup GitHub Actions for deploying static site
+
+### Set enviroment variables
+
+- Access to https://github.com/{your-account}/{repository-name}/settings/secrets/actions
+- Push "**New repository secret**" button
+- Add Below
+  - **AWS_ACCESS_KEY_ID** : your-aws-access_key
+  - **AWS_SECRET_ACCESS_KEY** : your-aws-secret_key
+- Push "Variable" tab
+- Push "**New repository valiable**" button
+  - For Production
+    - **CLOUDFRONT_DISTRIBUTION** : your cloudfront distribution created by terraform for production
+    - **S3_CONFIG_BUCKET**: **"your-serverles-configs/your-project-name/frontend/prd"** for production
+    - **S3_RESOURCE_BUCKET**: **"your-domain-static.example.com"** for production
+  - For Develop
+    - **CLOUDFRONT_DISTRIBUTION_DEV** : your cloudfront distribution created by terraform for develop
+    - **S3_CONFIG_BUCKET_DEV**: **"your-serverles-configs/your-project-name/frontend/dev"** for develop
+    - **S3_RESOURCE_BUCKET_DEV**: **"your-domain-static-dev.example.com"** for develop

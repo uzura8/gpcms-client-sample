@@ -44,4 +44,5 @@ nbproject/
 tags
 
 /src/configs/config.json
+/src/configs/config-*.json
 
