@@ -1,5 +1,5 @@
 import type { HeadMeta, HeadMetaInput } from '@/types/Common'
-import { useSeoMeta } from '@unhead/vue'
+import { useSeoMeta, useHead } from '@unhead/vue'
 import { ref } from 'vue'
 import { config } from '@/configs'
 import { siteUrl } from '@/utils/site'
@@ -23,6 +23,17 @@ export function useHeadMeta() {
     const newMeta = convertMetaInput(inputMeta)
     Object.assign(meta.value, newMeta)
     useSeoMeta(meta.value)
+
+    if (meta.value.ogUrl) {
+      useHead({
+        link: [
+          {
+            rel: 'canonical',
+            href: meta.value.ogUrl
+          }
+        ]
+      })
+    }
   }
 
   const convertMetaInput = (input: HeadMetaInput): HeadMeta => {
