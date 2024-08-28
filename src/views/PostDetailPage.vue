@@ -2,12 +2,13 @@
 import type { HeadMetaInput } from '@/types/Common'
 import type { PostPublic } from '@/types/Post'
 import { defineComponent, computed, ref, onBeforeMount } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { useHeadMeta } from '@/composables/useHeadMeta'
 import { config } from '@/configs'
 import { date } from '@/utils'
 import { substr } from '@/utils/str'
+import { badgeClass } from '@/utils/style'
 import { PostApi } from '@/apis'
 import PostBody from '@/components/atoms/PostBody.vue'
 
@@ -18,6 +19,11 @@ export default defineComponent({
 
   setup() {
     const route = useRoute()
+    const router = useRouter()
+
+    const goBack = () => {
+      router.go(-1)
+    }
 
     const serviceId = config.post.serviceId
     const globalLoader = useGlobalLoaderStore()
@@ -62,7 +68,9 @@ export default defineComponent({
       post,
       serviceId,
       dateFomat: date.formatDate,
-      setPost
+      setPost,
+      badgeClass,
+      goBack
     }
   }
 })
@@ -70,11 +78,17 @@ export default defineComponent({
 
 <template>
   <div v-if="post">
-    <div class="block">
-      <RouterLink to="/posts/">
-        <i class="fas fa-chevron-left"></i>
+    <div class="mb-12">
+      <button
+        @click="goBack"
+        class="text-lg font-medium text-primary-600 dark:text-primary-500 hover:underline"
+      >
+        <FontAwesomeIcon
+          icon="angle-left"
+          class="me-2"
+        />
         <span>{{ $t('common.posts') }}</span>
-      </RouterLink>
+      </button>
     </div>
 
     <h1 class="text-4xl font-extrabold dark:text-white">{{ post.title }}</h1>
@@ -82,28 +96,64 @@ export default defineComponent({
       <PostBody
         v-if="post.bodyHtml"
         :body="post.bodyHtml"
+        class="mb-12"
       />
-      <div class="">
-        <time
-          itemprop="datepublished"
-          :datetime="dateFomat(post.publishAt)"
-          >{{ dateFomat(post.publishAt) }}</time
-        >
-      </div>
 
-      <ul v-if="post && post.tags">
-        <li
-          v-for="tag in post.tags"
-          :key="tag.tagId"
-          class="is-inline-block"
+      <dl class="space-y-4">
+        <div class="sm:flex sm:items-center">
+          <dt class="w-24 font-medium text-gray-500 dark:text-white">
+            {{ $t('common.publishAt') }}
+          </dt>
+          <dd class="text-lg dark:text-white sm:flex-1">
+            <time
+              itemprop="datepublished"
+              :datetime="dateFomat(post.publishAt)"
+            >
+              {{ dateFomat(post.publishAt) }}
+            </time>
+          </dd>
+        </div>
+        <div
+          v-if="post && post.category"
+          class="sm:flex sm:items-center"
         >
-          <RouterLink
-            :to="`/posts/tags/${tag.label}`"
-            class=""
-            >{{ tag.label }}</RouterLink
-          >
-        </li>
-      </ul>
+          <dt class="w-24 font-medium text-gray-500 dark:text-white">
+            {{ $t('common.category') }}
+          </dt>
+          <dd class="text-lg dark:text-white sm:flex-1">
+            <RouterLink
+              :to="`/categories/${post.category.slug}/posts`"
+              class="font-medium text-primary-600 dark:text-primary-500 hover:underline"
+            >
+              {{ post.category.label }}
+            </RouterLink>
+          </dd>
+        </div>
+        <div
+          v-if="post && post.tags"
+          class="sm:flex sm:items-center"
+        >
+          <dt class="w-24 font-medium text-gray-500 dark:text-white">
+            {{ $t('common.tagsShort') }}
+          </dt>
+          <dd class="text-lg dark:text-white sm:flex-1">
+            <ul class="flex flex-wrap">
+              <li
+                v-for="tag in post.tags"
+                :key="tag.tagId"
+                class="mb-1"
+              >
+                <RouterLink
+                  :to="`/tags/${tag.label}/posts`"
+                  :class="badgeClass('primary', 'sm', true, false, true)"
+                >
+                  {{ tag.label }}
+                </RouterLink>
+              </li>
+            </ul>
+          </dd>
+        </div>
+      </dl>
     </div>
   </div>
 </template>
