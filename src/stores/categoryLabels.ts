@@ -1,5 +1,5 @@
 import type { BasicObj } from '@/types/Common'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useCategoryLabelsStore = defineStore('categoryLabels', () => {
@@ -13,14 +13,6 @@ export const useCategoryLabelsStore = defineStore('categoryLabels', () => {
     if (categoryLabels.value[slug]) return categoryLabels.value[slug]
     return ''
   }
-
-  watch(
-    categoryLabels,
-    (val) => {
-      console.log('categoryLabels', val)
-    },
-    { deep: true, immediate: true }
-  )
 
   return { categoryLabels, setValue, getValue }
 })
