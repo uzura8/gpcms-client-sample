@@ -30,6 +30,7 @@ export default defineComponent({
 
     const cateLabel = computed(() => {
       const storedLabel = cateLabelsStore.getValue(cateSlug.value)
+      console.log(111100000, cateSlug.value, storedLabel, category.value)
       if (storedLabel) return storedLabel
       if (!category.value) return ''
       return category.value.label
