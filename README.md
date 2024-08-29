@@ -46,6 +46,9 @@ npm run lint
 ```
 
 ## Setup GitHub Actions for deploying static site
+### Requirements
+
+- NodeJS == v22.7.0
 
 ### Set enviroment variables
 
