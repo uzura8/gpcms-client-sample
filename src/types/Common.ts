@@ -31,9 +31,9 @@ export type OgType =
 export type TwitterCard = 'summary' | 'summary_large_image' | 'app' | 'player' | null | undefined
 
 export interface HeadMetaInput {
-  title: string
+  title?: string
+  urlPath?: string
   description?: string | null | undefined
-  urlPath?: string | null | undefined
   imageUrl?: string | null | undefined
   type?: OgType
 }

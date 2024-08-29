@@ -2,6 +2,7 @@
 import type { HeadMetaInput } from '@/types/Common'
 import type { PostPublic } from '@/types/Post'
 import { defineComponent, computed, ref, onBeforeMount } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { useHeadMeta } from '@/composables/useHeadMeta'
@@ -18,6 +19,7 @@ export default defineComponent({
   },
 
   setup() {
+    const { t } = useI18n()
     const route = useRoute()
     const router = useRouter()
 

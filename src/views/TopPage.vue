@@ -1,7 +1,15 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onBeforeMount } from 'vue'
+import { useHeadMeta } from '@/composables/useHeadMeta'
 
-export default defineComponent({})
+export default defineComponent({
+  setup() {
+    const { setMeta } = useHeadMeta()
+    onBeforeMount(async () => {
+      setMeta()
+    })
+  }
+})
 </script>
 
 <template>

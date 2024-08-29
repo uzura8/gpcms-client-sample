@@ -1,7 +1,10 @@
 <script lang="ts">
+import type { HeadMetaInput } from '@/types/Common'
 import type { CategoryPublic } from '@/types/Category'
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import { useHeadMeta } from '@/composables/useHeadMeta'
 import { useCategoryLabelsStore } from '@/stores/categoryLabels'
 import { config } from '@/configs'
 import PostList from '@/components/organisms/PostList.vue'
@@ -15,6 +18,8 @@ export default defineComponent({
     const serviceId = config.post.serviceId
     const cateLabelsStore = useCategoryLabelsStore()
     const route = useRoute()
+    const { t } = useI18n()
+    const { setMeta } = useHeadMeta()
 
     const cateSlug = computed(() => {
       if (!route.params.slug) return ''
@@ -34,6 +39,19 @@ export default defineComponent({
       if (!category.value) return ''
       return category.value.label
     })
+
+    watch(
+      cateLabel,
+      (val) => {
+        if (!val) return
+        const metaObj: HeadMetaInput = {
+          title: t('common.postsOf', { label: `『${cateLabel.value}』` }),
+          description: t('common.postsOf', { label: `『${cateLabel.value}』` })
+        }
+        setMeta(metaObj)
+      },
+      { immediate: true }
+    )
 
     return {
       serviceId,

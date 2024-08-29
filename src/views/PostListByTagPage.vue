@@ -1,6 +1,9 @@
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import type { HeadMetaInput } from '@/types/Common'
+import { defineComponent, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import { useHeadMeta } from '@/composables/useHeadMeta'
 import { config } from '@/configs'
 import PostList from '@/components/organisms/PostList.vue'
 
@@ -11,6 +14,8 @@ export default defineComponent({
 
   setup() {
     const serviceId = config.post.serviceId
+    const { t } = useI18n()
+    const { setMeta } = useHeadMeta()
 
     const route = useRoute()
     const tagLabel = computed(() => {
@@ -18,6 +23,19 @@ export default defineComponent({
       if (typeof route.params.tagLabel !== 'string') return ''
       return route.params.tagLabel
     })
+
+    watch(
+      tagLabel,
+      (val) => {
+        if (!val) return
+        const metaObj: HeadMetaInput = {
+          title: t('common.postsOf', { label: `『${tagLabel.value}』` }),
+          description: t('msg.descriptionOfPostListAbout', { label: tagLabel.value })
+        }
+        setMeta(metaObj)
+      },
+      { immediate: true }
+    )
 
     return {
       serviceId,

@@ -1,10 +1,13 @@
 import type { HeadMeta, HeadMetaInput } from '@/types/Common'
 import { useSeoMeta, useHead } from '@unhead/vue'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { config } from '@/configs'
 import { siteUrl } from '@/utils/site'
 
 export function useHeadMeta() {
+  const route = useRoute()
+
   const meta = ref<HeadMeta>({
     title: config.site.name,
     description: null,
@@ -17,9 +20,10 @@ export function useHeadMeta() {
     twitterCard: null
   })
 
-  const titleSuffix = ' | ' + config.site.name
+  const titleSuffix = config.site.name
+  const suffixDelimiter = ' | '
 
-  const setMeta = (inputMeta: HeadMetaInput) => {
+  const setMeta = (inputMeta: HeadMetaInput = {}) => {
     const newMeta = convertMetaInput(inputMeta)
     Object.assign(meta.value, newMeta)
     useSeoMeta(meta.value)
@@ -36,17 +40,29 @@ export function useHeadMeta() {
     }
   }
 
+  const getTitle = (title: string) => {
+    const titleItems = []
+    if (title) {
+      titleItems.push(title)
+      titleItems.push(titleSuffix)
+    }
+    let res = titleItems.join(suffixDelimiter)
+    if (!res) res = config.site.name
+    return res
+  }
+
   const convertMetaInput = (input: HeadMetaInput): HeadMeta => {
-    const title = input.title + titleSuffix
+    const title = getTitle(String(input.title))
+    const path = input.urlPath || route.path
     const newMeta: HeadMeta = {
       title: title,
-      ogTitle: title
+      ogTitle: title,
+      ogUrl: siteUrl(path)
     }
     if (input.description) {
       newMeta.description = input.description
       newMeta.ogDescription = input.description
     }
-    if (input.urlPath) newMeta.ogUrl = siteUrl(input.urlPath)
     if (input.imageUrl) newMeta.ogImage = input.imageUrl
     if (input.type) newMeta.ogType = input.type
     return newMeta

@@ -1,4 +1,4 @@
-import type { RouterScrollBehavior } from 'vue-router'
+import type { RouterScrollBehavior, RouteLocationNormalized, NavigationGuardNext } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useGlobalHeaderStore } from '@/stores/globalHeader'
 import routes from './routes'
@@ -31,9 +31,12 @@ const router = createRouter({
   scrollBehavior
 })
 
-router.beforeEach(() => {
-  const globalHeader = useGlobalHeaderStore()
-  globalHeader.updateMenuOpenStatus(false)
-})
+router.beforeEach(
+  (_to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
+    const globalHeader = useGlobalHeaderStore()
+    globalHeader.updateMenuOpenStatus(false)
+    next()
+  }
+)
 
 export default router

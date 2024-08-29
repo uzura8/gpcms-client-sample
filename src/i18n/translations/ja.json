@@ -52,7 +52,7 @@
     "reset": "リセット",
     "post": "投稿",
     "posts": "投稿一覧",
-    "postsOf": "{label} の投稿一覧",
+    "postsOf": "{label}の投稿一覧",
     "category": "カテゴリ",
     "categories": "カテゴリ一覧",
     "categoriesShort": "カテゴリ",
@@ -187,6 +187,9 @@
     "inputNoMoreThanTargetCharacters": "入力は{num}以下にしてください",
     "inputLessThanTargetCharacters": "入力は{num}未満にしてください",
     "inputDifferentValueFrom": "{target}とは異なる値を入力してください",
+    "descriptionOfPageAbout": "{label}のページです。",
+    "descriptionOfPostList": "投稿一覧です。",
+    "descriptionOfPostListAbout": "{label}に関する投稿一覧です。",
     "signInGreeting": "こんにちは、{name} さん！"
   },
   "error": {
