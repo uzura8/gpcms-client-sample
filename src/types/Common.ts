@@ -1,3 +1,7 @@
+export interface BasicObj {
+  [key: string]: any
+}
+
 export interface ApiListParams {
   pageToken?: string
   count?: number

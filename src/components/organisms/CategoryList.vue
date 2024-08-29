@@ -2,6 +2,7 @@
 import type { CategoryPublic, ApiListParamsCategory } from '@/types/Category'
 import { defineComponent, ref, onBeforeMount } from 'vue'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
+import { useCategoryLabelsStore } from '@/stores/categoryLabels'
 import { CategoryApi } from '@/apis'
 import CategoryListItem from '@/components/organisms/CategoryListItem.vue'
 
@@ -18,11 +19,11 @@ export default defineComponent({
   },
 
   setup(props) {
-    const maxNodeDepth = 2
-
     const globalLoader = useGlobalLoaderStore()
+    const cateLabelsStore = useCategoryLabelsStore()
 
     const categories = ref<CategoryPublic[]>([])
+    const maxNodeDepth = 2
 
     const setCategories = async () => {
       try {
@@ -33,6 +34,9 @@ export default defineComponent({
         const res = await CategoryApi.getOneBySlug(props.serviceId, 'root', params)
         if (res.children) {
           categories.value = res.children
+          categories.value.map((cate) => {
+            cateLabelsStore.setValue(cate.slug, cate.label)
+          })
         }
       } catch (error) {
         console.log(error)
