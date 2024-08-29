@@ -64,7 +64,7 @@ export function isEqualObjs(obj1: any, obj2: any): boolean {
   }
 
   // obj1 の各キーに対して再帰的に比較
-  for (let key of keys1) {
+  for (const key of keys1) {
     if (!keys2.includes(key)) {
       return false
     }

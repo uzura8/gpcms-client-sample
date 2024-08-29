@@ -1,3 +1,36 @@
+<script lang="ts">
+import type { PostPublic } from '@/types/Post'
+import type { PropType } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { substr } from '@/utils/str'
+import MediaImg from '@/components/atoms/MediaImg.vue'
+import config from '@/configs/config.json'
+
+export default defineComponent({
+  components: {
+    MediaImg
+  },
+
+  props: {
+    post: {
+      type: Object as PropType<PostPublic>,
+      required: true
+    }
+  },
+
+  setup() {
+    const imageSize = computed((): string => {
+      return config.post.listImageSize
+    })
+
+    return {
+      substr,
+      imageSize
+    }
+  }
+})
+</script>
+
 <template>
   <div
     v-if="post"
@@ -36,36 +69,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import type { PostPublic } from '@/types/Post'
-import type { PropType } from 'vue'
-import { defineComponent, computed } from 'vue'
-import { substr } from '@/utils/str'
-import MediaImg from '@/components/atoms/MediaImg.vue'
-import config from '@/configs/config.json'
-
-export default defineComponent({
-  components: {
-    MediaImg
-  },
-
-  props: {
-    post: {
-      type: Object as PropType<PostPublic>,
-      required: true
-    }
-  },
-
-  setup(props) {
-    const imageSize = computed((): string => {
-      return config.post.listImageSize
-    })
-
-    return {
-      substr,
-      imageSize
-    }
-  }
-})
-</script>

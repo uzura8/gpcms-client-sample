@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import type { PostsCondition } from '@/stores/posts'
-import { defineComponent, ref, computed, watch } from 'vue'
+import { defineComponent, computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useGlobalLoaderStore } from '@/stores/globalLoader'
 import { usePostsStore } from '@/stores/posts'
