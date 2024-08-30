@@ -2,10 +2,10 @@
 import type { HeadMetaInput } from '@/types/Common'
 import type { PostPublic } from '@/types/Post'
 import { defineComponent, computed, ref, onBeforeMount } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { useHeadMeta } from '@/composables/useHeadMeta'
+import useMedia from '@/commons/useMedia'
 import { config } from '@/configs'
 import { date } from '@/utils'
 import { substr } from '@/utils/str'
@@ -19,7 +19,6 @@ export default defineComponent({
   },
 
   setup() {
-    const { t } = useI18n()
     const route = useRoute()
     const router = useRouter()
 
@@ -30,6 +29,7 @@ export default defineComponent({
     const serviceId = config.post.serviceId
     const globalLoader = useGlobalLoaderStore()
     const { setMeta } = useHeadMeta()
+    const { mediaUrl } = useMedia()
 
     const slug = computed(() => {
       return route.params.slug ? (route.params.slug as string) : ''
@@ -52,6 +52,11 @@ export default defineComponent({
         }
         if (post.value.bodyText) {
           metaObj.description = substr(post.value.bodyText, 100, '...')
+        }
+        if (post.value.images && post.value.images.length > 0) {
+          const img = post.value.images[0]
+          const imgSize = config.post.ogpImageSize || '800x800'
+          metaObj.imageUrl = mediaUrl(serviceId, 'image', img.fileId, img.mimeType, imgSize)
         }
         setMeta(metaObj)
 
