@@ -5,6 +5,7 @@ export interface BasicObj {
 export interface ApiListParams {
   pageToken?: string
   count?: number
+  order?: string
 }
 
 export interface ApiListResponse {

@@ -1,9 +1,18 @@
+export function numFormat(num: number): string {
+  if (isNaN(num)) return '0'
+  return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
+}
+
+export function trimSpaces(str: string): string {
+  return str.replace(/(^\s+)|(\s+$)/g, '')
+}
+
 export function substr(text: string, len: number, truncation = ''): string {
   const textArray = text.split('')
   let count = 0
   let str = ''
   for (let i = 0, m = textArray.length; i < m; i++) {
-    const n = escape(textArray[i])
+    const n = encodeURIComponent(textArray[i])
     if (n.length < 4) {
       count++
     } else {

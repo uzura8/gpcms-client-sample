@@ -7,15 +7,17 @@ import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { useHeadMeta } from '@/composables/useHeadMeta'
 import useMedia from '@/commons/useMedia'
 import { config } from '@/configs'
-import { date } from '@/utils'
+import { formatDate } from '@/utils/date'
 import { substr } from '@/utils/str'
 import { badgeClass } from '@/utils/style'
 import { PostApi } from '@/apis'
 import PostBody from '@/components/atoms/PostBody.vue'
+import CommentList from '@/components/organisms/CommentList.vue'
 
 export default defineComponent({
   components: {
-    PostBody
+    PostBody,
+    CommentList
   },
 
   setup() {
@@ -74,7 +76,7 @@ export default defineComponent({
     return {
       post,
       serviceId,
-      dateFomat: date.formatDate,
+      formatDate,
       setPost,
       badgeClass,
       goBack
@@ -99,7 +101,7 @@ export default defineComponent({
     </div>
 
     <h1 class="text-4xl font-extrabold dark:text-white">{{ post.title }}</h1>
-    <div class="container mx-auto py-8">
+    <div class="container mx-auto">
       <PostBody
         v-if="post.bodyHtml"
         :body="post.bodyHtml"
@@ -114,9 +116,9 @@ export default defineComponent({
           <dd class="text-lg dark:text-white sm:flex-1">
             <time
               itemprop="datepublished"
-              :datetime="dateFomat(post.publishAt)"
+              :datetime="formatDate(post.publishAt)"
             >
-              {{ dateFomat(post.publishAt) }}
+              {{ formatDate(post.publishAt) }}
             </time>
           </dd>
         </div>
@@ -162,5 +164,13 @@ export default defineComponent({
         </div>
       </dl>
     </div>
+
+    <CommentList
+      v-if="post && post.postId"
+      :service-id="serviceId"
+      :content-id="`post-${post.postId}`"
+      :enabled-form="true"
+      class="mt-16"
+    />
   </div>
 </template>

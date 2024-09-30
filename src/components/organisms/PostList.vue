@@ -1,5 +1,6 @@
 <script lang="ts">
 import type { PropType } from 'vue'
+import type { ApiListParams } from '@/types/Common'
 import type { PostsCondition } from '@/stores/posts'
 import { defineComponent, computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -9,9 +10,8 @@ import { PostApi } from '@/apis'
 import PostListItem from '@/components/organisms/PostListItem.vue'
 
 // Types
-interface Params {
+interface Params extends ApiListParams {
   pagerKey?: string
-  pageToken?: string
   tag?: string
   category?: string
   apiVer?: number

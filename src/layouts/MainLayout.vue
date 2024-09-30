@@ -6,8 +6,8 @@
       <MainHeader />
 
       <div class="flex-1">
-        <div class="lg:grid lg:grid-cols-12 h-full max-w-[85rem] mx-auto">
-          <main class="lg:col-span-9 xl:col-span-10 px-6 py-8">
+        <div class="lg:grid lg:grid-cols-12 h-full mx-auto">
+          <main class="lg:col-span-9 xl:col-span-10 w-full py-8 px-6 md:max-w-4xl md:mx-auto">
             <RouterView />
           </main>
 

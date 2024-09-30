@@ -12,7 +12,12 @@ const client: AxiosInstance = axios.create({
   responseType: 'json'
 })
 
-const getRequestOption = (url: string, method: string, params: any = {}, token = '') => {
+const getRequestOption = (
+  url: string,
+  method: string,
+  params: any = {},
+  token: string | null = ''
+) => {
   const params_cloned = { ...params }
   const options: AxiosRequestConfig = {
     url: url,

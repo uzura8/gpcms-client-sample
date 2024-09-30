@@ -16,6 +16,7 @@
   },
   "post": {
     "serviceId": "your-serviceId",
+    "enabledComment": true,
     "listImageSize": "1200x800x",
     "ogpImageSize": "800x800"
   }

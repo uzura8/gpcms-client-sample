@@ -17,6 +17,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@types/vue-router": "^2.0.0",
     "@unhead/vue": "^1.10.0",
     "axios": "^1.7.5",
     "highlight.js": "^11.10.0",
