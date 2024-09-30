@@ -6,7 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useGlobalLoaderStore } from '@/stores/globalLoader.js'
 import { useHeadMeta } from '@/composables/useHeadMeta'
 import useMedia from '@/commons/useMedia'
-import { config } from '@/configs'
+import config from '@/configs/config.json'
 import { formatDate } from '@/utils/date'
 import { substr } from '@/utils/str'
 import { badgeClass } from '@/utils/style'
@@ -29,6 +29,7 @@ export default defineComponent({
     }
 
     const serviceId = config.post.serviceId
+    const isEnabledComment = config.post.enabledComment
     const globalLoader = useGlobalLoaderStore()
     const { setMeta } = useHeadMeta()
     const { mediaUrl } = useMedia()
@@ -76,6 +77,7 @@ export default defineComponent({
     return {
       post,
       serviceId,
+      isEnabledComment,
       formatDate,
       setPost,
       badgeClass,
@@ -109,7 +111,10 @@ export default defineComponent({
       />
 
       <dl class="space-y-4">
-        <div class="sm:flex sm:items-center">
+        <div
+          v-if="post.publishAt"
+          class="sm:flex sm:items-center"
+        >
           <dt class="w-24 font-medium text-gray-500 dark:text-white">
             {{ $t('common.publishAt') }}
           </dt>
@@ -166,7 +171,7 @@ export default defineComponent({
     </div>
 
     <CommentList
-      v-if="post && post.postId"
+      v-if="isEnabledComment && post && post.postId"
       :service-id="serviceId"
       :content-id="`post-${post.postId}`"
       :enabled-form="true"
