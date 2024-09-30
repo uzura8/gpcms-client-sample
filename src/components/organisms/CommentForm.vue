@@ -9,10 +9,6 @@ import { buttonClass } from '@/utils/style'
 import { CommentApi } from '@/apis'
 import FormInputField from '@/components/molecules/FormInputField.vue'
 
-interface FieldErrors {
-  body: string
-}
-
 export default defineComponent({
   components: {
     FormInputField
@@ -38,6 +34,9 @@ export default defineComponent({
 
     const isEdit = ref<boolean>(false)
 
+    type FieldErrors = {
+      body: string
+    }
     const errors = ref<FieldErrors>({
       body: ''
     })
