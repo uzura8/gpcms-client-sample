@@ -47,7 +47,7 @@ export default defineComponent({
     const commentCount = ref<number>(0)
     const paramsDef: Params = {
       order: 'desc',
-      count: 3,
+      count: 5,
       apiVer: 2
     }
 
@@ -88,13 +88,17 @@ export default defineComponent({
     const checkAndApplyLatestComments = async () => {
       let params: Params = { ...paramsDef }
       const res = await fetchComments(params, false)
-      if (!res || !res.items || res.items.length < 1) return
+      if (!res || !res.items || res.items.length < 2) return
+      if (comments.value.length < 2) return
       if (res.items[1].commentId === comments.value[1].commentId) return
 
       comments.value = []
       res.items.forEach((item) => {
         comments.value.push(item)
       })
+      if (res.meta && res.meta.count) {
+        commentCount.value = res.meta.count
+      }
     }
 
     const updateCommentList = (comment: CommentPublic) => {
