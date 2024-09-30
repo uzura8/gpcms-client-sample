@@ -36,4 +36,9 @@ export interface CommentsApiResult {
 
 export interface CommentFormValues {
   body: string
+  profiles?: {
+    age?: string
+    area?: string
+    nickname?: string
+  }
 }

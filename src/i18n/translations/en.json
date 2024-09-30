@@ -59,6 +59,7 @@
     "tag": "Tag",
     "tags": "Tags",
     "tagsShort": "Tags",
+    "comment": "Comment",
     "comments": "Comments",
     "commentsShort": "Comments",
     "image": "Image",
@@ -99,6 +100,7 @@
     "value": "Value",
     "equalTo": "Equal To",
     "contains": "Contains",
+    "optional": "Optional",
     "undo": "Undo",
     "more": "More"
   },

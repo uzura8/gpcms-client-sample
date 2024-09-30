@@ -60,6 +60,7 @@
     "tag": "タグ",
     "tags": "タグ一覧",
     "tagsShort": "タグ",
+    "comment": "コメント",
     "comments": "コメント一覧",
     "commentsShort": "コメント",
     "image": "画像",
@@ -100,6 +101,7 @@
     "value": "値",
     "equalTo": "次と等しい",
     "contains": "次を含む",
+    "optional": "非必須",
     "undo": "元に戻す",
     "more": "もっと見る"
   },

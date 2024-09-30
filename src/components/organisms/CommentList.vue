@@ -6,7 +6,7 @@ import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useGlobalLoaderStore } from '@/stores/globalLoader'
 import { CommentApi } from '@/apis'
 import { formatDate } from '@/utils/date'
-import { numFormat } from '@/utils/str'
+import { numFormat, bodyText } from '@/utils/str'
 import CommentForm from '@/components/organisms/CommentForm.vue'
 
 // Types
@@ -120,7 +120,8 @@ export default defineComponent({
       hasNext,
       isLoading,
       formatDate,
-      numFormat
+      numFormat,
+      bodyText
     }
   }
 })
@@ -176,9 +177,18 @@ export default defineComponent({
                 </p>
               </div>
             </footer>
-            <div class="text-gray-500 dark:text-gray-400">
-              {{ comment.body }}
-            </div>
+            <div
+              class="text-gray-500 dark:text-gray-400"
+              v-html="
+                $sanitize(
+                  bodyText(
+                    comment.body,
+                    true,
+                    'text-primary-600 dark:text-blue-500 hover:underline'
+                  )
+                )
+              "
+            ></div>
           </li>
         </ul>
         <div
@@ -187,7 +197,7 @@ export default defineComponent({
         >
           <a
             @click="setCommentList"
-            class="cursor-pointer text-blue-600 hover:text-blue-800"
+            class="cursor-pointer text-primary-600 hover:text-primary-800"
           >
             {{ $t('common.more') }}
           </a>

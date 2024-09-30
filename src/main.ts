@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { createHead } from '@unhead/vue'
+import Vue3Sanitize from 'vue-3-sanitize'
 
 import App from './App.vue'
 import router from './router'
@@ -14,6 +15,12 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.use(Vue3Sanitize, {
+  allowedTags: ['br', 'a'],
+  allowedAttributes: {
+    a: ['class', 'href', 'target', 'rel', 'title']
+  }
+})
 
 const head = createHead()
 app.use(head)
