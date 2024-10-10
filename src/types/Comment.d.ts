@@ -9,6 +9,7 @@ export interface CommentPublic {
   createdAt: string
   updatedAt: string
   statusCreatedAt: string
+  publishStatus?: PublishStatus
   profiles?: {
     [key: string]: string
   }

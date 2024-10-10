@@ -47,8 +47,7 @@ export default defineComponent({
     const commentCount = ref<number>(0)
     const paramsDef: Params = {
       order: 'desc',
-      count: 5,
-      apiVer: 2
+      count: 5
     }
 
     const fetchComments = async (
@@ -102,6 +101,7 @@ export default defineComponent({
     }
 
     const updateCommentList = (comment: CommentPublic) => {
+      if (comment.publishStatus === 'unpublish') return
       comments.value.unshift(comment)
       commentCount.value += 1
       checkAndApplyLatestComments()

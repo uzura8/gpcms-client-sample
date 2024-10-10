@@ -103,7 +103,7 @@ export default defineComponent({
     </div>
 
     <h1 class="text-4xl font-extrabold dark:text-white">{{ post.title }}</h1>
-    <div class="container mx-auto">
+    <div class="mx-auto mt-12">
       <PostBody
         v-if="post.bodyHtml"
         :body="post.bodyHtml"
