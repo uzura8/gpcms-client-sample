@@ -42,4 +42,5 @@ export interface CommentFormValues {
     area?: string
     nickname?: string
   }
+  recaptcha?: string
 }
