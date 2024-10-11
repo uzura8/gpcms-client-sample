@@ -27,7 +27,7 @@ if (config.recapchaSiteKey) {
   app.use(VueReCaptcha, {
     siteKey: config.recapchaSiteKey,
     loaderOptions: {
-      // autoHideBadge: true
+      autoHideBadge: true
     }
   })
 }
