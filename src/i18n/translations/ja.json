@@ -26,6 +26,7 @@
     "normal": "通常",
     "anonymous": "匿名",
     "send": "送信する",
+    "sentFor": "{label}を送信しました",
     "edit": "編集",
     "editOf": "{label}の編集",
     "editDirectly": "直接編集する",

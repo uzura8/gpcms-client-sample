@@ -2,12 +2,15 @@
 import type { CommentFormValues } from '@/types/Comment'
 import type { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue'
+import { useReCaptcha } from 'vue-recaptcha-v3'
 import { useGlobalLoaderStore } from '@/stores/globalLoader'
+import { useToast } from '@/composables/useToast'
 import { trimSpaces, countChars } from '@/utils/str'
 import { buttonClass } from '@/utils/style'
 import { CommentApi } from '@/apis'
 import FormInputField from '@/components/molecules/FormInputField.vue'
+import { config } from '@/configs'
 
 export default defineComponent({
   components: {
@@ -29,18 +32,27 @@ export default defineComponent({
 
   setup(props, context) {
     const { t } = useI18n()
+    const { notify } = useToast()
     const globalLoader = useGlobalLoaderStore()
     const isLoading = computed(() => globalLoader.isLoading)
+
+    const isReCaptchaReady = ref<boolean>(false)
+    const reCaptcha = useReCaptcha()
+    const isEnabledRecapcha = computed(() => {
+      return config.recapchaSiteKey.length > 0
+    })
 
     const isEdit = ref<boolean>(false)
 
     type FieldErrors = {
       body: string
       nickname: string
+      recaptcha: string
     }
     const errors = ref<FieldErrors>({
       body: '',
-      nickname: ''
+      nickname: '',
+      recaptcha: ''
     })
     const hasErrors = computed(() => {
       return Object.values(errors.value).some((error) => error)
@@ -76,11 +88,12 @@ export default defineComponent({
       nickname.value = ''
       errors.value = {
         body: '',
-        nickname: ''
+        nickname: '',
+        recaptcha: ''
       }
     }
 
-    const createComment = async () => {
+    const createComment = async (recaptchaToken = '') => {
       validateAll()
       if (hasErrors.value) return
 
@@ -90,11 +103,12 @@ export default defineComponent({
           nickname: nickname.value
         }
       }
-
+      if (recaptchaToken) values.recaptcha = recaptchaToken
       try {
         globalLoader.updateLoading(true)
         const res = await CommentApi.create(props.serviceId, props.contentId, values)
         context.emit('createComment', res)
+        notify(t('common.sentFor', { label: t('common.comment') }), 'success')
         resetForm()
       } catch (error) {
         console.log(error)
@@ -103,13 +117,41 @@ export default defineComponent({
       }
     }
 
+    const submitForm = async () => {
+      validateAll()
+      if (hasErrors.value) {
+        notify(t('msg["Invalid inputs exists"]'), 'error')
+        return
+      }
+      if (isEnabledRecapcha.value) {
+        if (reCaptcha && reCaptcha.executeRecaptcha) {
+          globalLoader.updateLoading(true)
+          const token = await reCaptcha.executeRecaptcha('login')
+          globalLoader.updateLoading(false)
+          await createComment(token)
+        } else {
+          console.error('ReCAPTCHA is not yet loaded.')
+        }
+      } else {
+        await createComment()
+      }
+    }
+
+    onMounted(() => {
+      if (reCaptcha) {
+        isReCaptchaReady.value = true
+      } else {
+        console.warn('ReCAPTCHA has not been loaded')
+      }
+    })
+
     return {
       isLoading,
       body,
       validateBody,
       nickname,
       validateNickname,
-      createComment,
+      submitForm,
       errors,
       hasErrors,
       isEdit,
@@ -143,11 +185,11 @@ export default defineComponent({
       </p>
 
       <button
-        @click="createComment"
         type="button"
         :disabled="hasErrors"
         :class="buttonClass('primary', 'base', false, hasErrors)"
         v-text="isEdit ? $t('common.update') : $t('common.send')"
+        @click="submitForm"
       ></button>
     </div>
   </section>

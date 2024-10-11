@@ -26,6 +26,7 @@
     "normal": "Normal",
     "anonymous": "Anonymous",
     "send": "Send",
+    "sentFor": "Sent {target}",
     "edit": "Edit",
     "editOf": "Edit {label}",
     "editDirectly": "Edit Directly",
