@@ -32,8 +32,10 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+@use '@/styles/browser-default.scss' as browser-default;
+
 .post-body {
-  @import '@/styles/browser-default.scss';
+  @include browser-default.browser-default-styles;
   pre {
     padding: 0 0;
   }
