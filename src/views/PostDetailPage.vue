@@ -39,7 +39,7 @@ export default defineComponent({
     })
 
     const previewToken = computed(() => {
-      return route.query.previewToken ? (route.query.previewToken as string) : ''
+      return route.query.token ? (route.query.token as string) : ''
     })
 
     let post = ref({} as PostPublic)
