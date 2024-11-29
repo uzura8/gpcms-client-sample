@@ -14,6 +14,9 @@
   "media": {
     "url": "https://media.example.com"
   },
+  "content": {
+    "serviceId": "your-serviceId-for-content"
+  },
   "post": {
     "serviceId": "your-serviceId",
     "enabledComment": true,
