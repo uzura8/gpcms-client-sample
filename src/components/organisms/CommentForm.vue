@@ -126,7 +126,7 @@ export default defineComponent({
       if (isEnabledRecapcha.value) {
         if (reCaptcha && reCaptcha.executeRecaptcha) {
           globalLoader.updateLoading(true)
-          const token = await reCaptcha.executeRecaptcha('login')
+          const token = await reCaptcha.executeRecaptcha('comment')
           globalLoader.updateLoading(false)
           await createComment(token)
         } else {
